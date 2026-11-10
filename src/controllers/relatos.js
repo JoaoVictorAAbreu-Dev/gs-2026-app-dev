@@ -2,18 +2,9 @@
 // então os mesmos handlers rodam com MongoDB de verdade ou com um repositório em memória nos testes.
 // Cada handler só usa req.body, req.query e res.status().json(), que o Express e os testes oferecem.
 
-import {
-  CATEGORIAS,
-  IMPACTOS,
-  LIMITES,
-  MS_POR_DIA,
-  REGRA_ATENCAO,
-  dataDeTexto,
-  hojeEmSaoPaulo,
-  textoDeData,
-} from '../dominio.js';
+import { CATEGORIAS, IMPACTOS, LIMITES, dataDeTexto, textoDeData } from '../dominio.js';
+import { calcularIndicadores, janelasDeAtencao } from '../services/indicadores.js';
 import { normalizarBairro, validarRelato } from '../validation/relato.js';
-import { calcularIndicadores } from '../services/indicadores.js';
 
 const LIMITE_PADRAO = 10;
 const LIMITE_MAXIMO = 50;
@@ -117,17 +108,12 @@ export function criarControlador({ repositorio, agora = () => new Date() }) {
     /** GET /api/indicadores — total, resumo por categoria/impacto/bairro e atenção dos últimos 7 dias. */
     async indicadores(req, res) {
       const instante = agora();
-      const hoje = dataDeTexto(hojeEmSaoPaulo(instante));
-      const fim = new Date(hoje.getTime() + MS_POR_DIA); // exclusivo: inclui o dia de hoje
-      const inicioAtual = new Date(fim.getTime() - REGRA_ATENCAO.janelaDias * MS_POR_DIA);
-      const inicioAnterior = new Date(inicioAtual.getTime() - REGRA_ATENCAO.janelaDias * MS_POR_DIA);
-
       const [total, porCategoria, porImpacto, porBairro, janelas] = await Promise.all([
         repositorio.contar(),
         repositorio.agruparPor('categoria'),
         repositorio.agruparPor('impacto'),
         repositorio.agruparPor('bairro'),
-        repositorio.janelasPorBairro({ inicioAnterior, inicioAtual, fim }),
+        repositorio.janelasPorBairro(janelasDeAtencao(instante)),
       ]);
 
       return res.json(calcularIndicadores({ total, porCategoria, porImpacto, porBairro, janelas, geradoEm: instante }));

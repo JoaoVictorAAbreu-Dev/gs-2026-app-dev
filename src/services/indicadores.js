@@ -5,7 +5,7 @@
 // classificação de atenção por bairro e tendência. São funções puras, então
 // os testes rodam sem MongoDB.
 
-import { CATEGORIAS, IMPACTOS, REGRA_ATENCAO } from '../dominio.js';
+import { CATEGORIAS, IMPACTOS, MS_POR_DIA, REGRA_ATENCAO, dataDeTexto, hojeEmSaoPaulo } from '../dominio.js';
 
 const BAIRROS_EM_DESTAQUE = 5;
 
@@ -38,6 +38,21 @@ export function resumirBairros(linhas, limite = BAIRROS_EM_DESTAQUE) {
     destaque.push({ bairro: `Outros ${resto.length} bairros`, total: soma, agregado: true });
   }
   return destaque;
+}
+
+/**
+ * Períodos comparados pela regra de atenção, a partir do "hoje" de São Paulo.
+ * Janela atual = [inicioAtual, fim): hoje e os 6 dias anteriores.
+ * Janela anterior = [inicioAnterior, inicioAtual): os 7 dias antes disso.
+ * @returns {{ inicioAnterior: Date, inicioAtual: Date, fim: Date }}
+ */
+export function janelasDeAtencao(agora = new Date(), regra = REGRA_ATENCAO) {
+  const hoje = dataDeTexto(hojeEmSaoPaulo(agora));
+  const duracao = regra.janelaDias * MS_POR_DIA;
+  const fim = new Date(hoje.getTime() + MS_POR_DIA); // exclusivo, para incluir o dia de hoje inteiro
+  const inicioAtual = new Date(fim.getTime() - duracao);
+  const inicioAnterior = new Date(inicioAtual.getTime() - duracao);
+  return { inicioAnterior, inicioAtual, fim };
 }
 
 export function tendencia(atual, anterior) {

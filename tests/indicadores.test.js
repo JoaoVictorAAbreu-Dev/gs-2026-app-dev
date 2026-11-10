@@ -3,6 +3,7 @@ import { describe, it } from 'node:test';
 import {
   calcularIndicadores,
   classificarAtencao,
+  janelasDeAtencao,
   montarAtencao,
   percentual,
   resumirBairros,
@@ -133,5 +134,16 @@ describe('calcularIndicadores', () => {
 
   it('inclui a regra aplicada, para o painel poder mostrá-la', () => {
     assert.equal(calcularIndicadores(dados).regra.altaRelatos, 5);
+  });
+});
+
+describe('janelasDeAtencao', () => {
+  it('janela atual = hoje e os 6 dias anteriores; a anterior = os 7 dias antes', () => {
+    // 09/11/2026 às 22h em São Paulo (01h UTC do dia 10): o "hoje" continua sendo dia 9.
+    const { inicioAnterior, inicioAtual, fim } = janelasDeAtencao(new Date('2026-11-10T01:00:00Z'));
+
+    assert.equal(fim.toISOString(), '2026-11-10T00:00:00.000Z');
+    assert.equal(inicioAtual.toISOString(), '2026-11-03T00:00:00.000Z');
+    assert.equal(inicioAnterior.toISOString(), '2026-10-27T00:00:00.000Z');
   });
 });
