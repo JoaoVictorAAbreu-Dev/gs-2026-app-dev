@@ -51,6 +51,26 @@ Coleção `relatos`: `categoria`, `impacto`, `bairro`, `dataEvento`, `descricao`
 
 A regra é um sinal para olhar com cuidado, não uma previsão nem um alerta oficial.
 
+## Regras de negócio
+Os números ficam em um só lugar (`src/dominio.js`) e valem para a validação, o banco e o painel.
+
+| Regra | Onde |
+|---|---|
+| Categoria e impacto só aceitam os valores conhecidos (6 categorias, 3 níveis) | `validation/relato.js` + validador do MongoDB |
+| Bairro de 2 a 80 letras, normalizado ("jardim são josé ii" → "Jardim São José II") para o mesmo bairro não contar duas vezes | `validation/relato.js` |
+| Data do evento: não pode ser futura nem ter mais de 365 dias; o "hoje" é o de São Paulo | `validation/relato.js` |
+| Privacidade: descrição com e-mail ou telefone é recusada; o relato é anônimo | `validation/relato.js` |
+| Quem envia não escolhe `_id`, `criadoEm` nem `ficticio` | `controllers/relatos.js` |
+| No máximo 5 relatos a cada 10 minutos por origem (resposta 429), para ninguém inflar a atenção de um bairro | `middlewares/limitarEnvios.js` |
+| Atenção por bairro e tendência (janelas de 7 dias) | `services/indicadores.js` |
+| Filtros da listagem só aceitam valores conhecidos (bloqueia operadores do MongoDB na URL) | `controllers/relatos.js` |
+
+## Qualidade do código
+- **Camadas com uma responsabilidade cada:** rotas → controlador (HTTP) → validação e serviços (regras, funções puras) → repositório (MongoDB).
+- **Injeção de dependência:** o controlador recebe o repositório e o relógio, então os testes rodam sem banco.
+- **Testes:** `npm test` cobre validação, indicadores, controlador e limite de envios; o GitHub Actions roda os testes a cada push.
+- **Segurança:** texto dos relatos nunca vira HTML na tela, corpo JSON limitado a 10 KB, cabeçalhos de segurança, segredos só no `.env`.
+
 ## Estrutura
 ```
 src/        servidor (app, rotas, controlador, validação, serviço de indicadores, repositório MongoDB)
@@ -69,3 +89,4 @@ Express 5 (erros assíncronos vão ao middleware) · `node --test` e `--env-file
 - O ditado por voz depende do navegador e pode enviar o áudio ao serviço dele.
 - Fotos: crédito do bueiro ainda a confirmar (ver rodapé).
 - Não há autenticação nem moderação: protótipo acadêmico.
+- O limite de envios fica na memória do servidor (zera ao reiniciar) e usa o IP; atrás de um proxy, configure `trust proxy` no Express.
