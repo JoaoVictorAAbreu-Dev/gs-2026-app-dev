@@ -31,7 +31,12 @@ export async function conectar({ uri, nomeBanco }) {
 
   const db = client.db(nomeBanco);
   const existe = (await db.listCollections({ name: NOME_COLECAO }, { nameOnly: true }).toArray()).length > 0;
-  if (!existe) await db.createCollection(NOME_COLECAO, { validator: VALIDADOR });
+  if (existe) {
+    // Coleção antiga: atualiza o validador, para as regras do código e do banco não divergirem.
+    await db.command({ collMod: NOME_COLECAO, validator: VALIDADOR });
+  } else {
+    await db.createCollection(NOME_COLECAO, { validator: VALIDADOR });
+  }
 
   const colecao = db.collection(NOME_COLECAO);
   await Promise.all([
