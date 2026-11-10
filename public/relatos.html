@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatos — Território Seguro</title>
+  <meta name="description" content="Lista dos relatos da comunidade sobre os efeitos da chuva, com filtros por tipo, impacto e bairro.">
+  <meta name="theme-color" content="#0b6e8a">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&amp;display=swap">
+  <script src="/js/preferencias.js"></script>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/paginas.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="faixa-emergencia nao-imprimir" role="note">
+    <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-phone"/></svg>
+    <p>Em perigo agora? Este site não chama ninguém. Ligue <a href="tel:193">193</a> (Bombeiros) ou <a href="tel:199">199</a> (Defesa Civil).</p>
+  </div>
+
+  <div class="barra-a11y nao-imprimir">
+    <div class="barra-a11y__conteudo" role="group" aria-label="Ajustes de acessibilidade">
+      <span class="barra-a11y__rotulo">Ajustes:</span>
+      <div class="barra-a11y__acoes">
+        <button type="button" class="btn-chip" data-acao="fonte-menos" aria-label="Diminuir a letra">A−</button>
+        <button type="button" class="btn-chip" data-acao="fonte-mais" aria-label="Aumentar a letra">A+</button>
+        <button type="button" class="btn-chip" data-acao="contraste" aria-pressed="false"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-contrast"/></svg> Alto contraste</button>
+        <button type="button" class="btn-chip" data-acao="ouvir-pagina" aria-pressed="false" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir a página</button>
+        <button type="button" class="btn-chip" data-acao="libras" aria-pressed="false">Libras</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="cabecalho">
+    <div class="cabecalho__conteudo">
+      <a class="marca" href="/" aria-label="Território Seguro, página inicial">
+        <span class="marca__logo"><img src="/img/simbolo-branco.svg" alt="" width="28" height="28"></span>
+        <span>
+          <span class="marca__nome">Território Seguro</span>
+          <span class="marca__sub">Itaquaquecetuba · SP</span>
+        </span>
+      </a>
+      <button type="button" class="menu-botao" aria-expanded="false" aria-controls="menu-principal">
+        <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-menu"/></svg> <span>Menu</span>
+      </button>
+      <nav class="nav" id="menu-principal" aria-label="Principal">
+        <ul>
+            <li><a href="/">Início</a></li>
+            <li><a href="/registrar">Registrar relato</a></li>
+            <li><a href="/relatos" aria-current="page">Ver relatos</a></li>
+            <li><a href="/painel">Painel</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn--primario cabecalho__cta" href="/registrar">Registrar relato</a>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <div class="pagina-topo">
+      <div class="contentor">
+        <nav class="migalhas" aria-label="Você está em"><ol><li><a href="/">Início</a></li><li aria-current="page">Relatos</li></ol></nav>
+        <h1 class="t-display-l">Relatos da comunidade</h1>
+        <p class="pagina-topo__sub t-corpo-l">Do mais recente ao mais antigo. Relatos de demonstração aparecem com o selo “Exemplo”.</p>
+      </div>
+    </div>
+
+    <div class="pagina-corpo">
+      <div class="contentor layout-relatos">
+        <section aria-labelledby="lista-titulo">
+          <search>
+            <form class="filtros" id="filtros" aria-label="Filtrar relatos">
+              <div class="campo">
+                <label class="campo__rotulo" for="f-categoria">Tipo de problema</label>
+                <select class="entrada" id="f-categoria" name="categoria"><option value="">Todos</option></select>
+              </div>
+              <div class="campo">
+                <label class="campo__rotulo" for="f-impacto">Impacto</label>
+                <select class="entrada" id="f-impacto" name="impacto"><option value="">Todos</option></select>
+              </div>
+              <div class="campo">
+                <label class="campo__rotulo" for="f-bairro">Bairro</label>
+                <input class="entrada" id="f-bairro" name="bairro" type="search" list="f-bairros" autocomplete="off" maxlength="80" placeholder="Qualquer bairro">
+                <datalist id="f-bairros"></datalist>
+              </div>
+              <div class="filtros__acoes">
+                <button type="submit" class="btn btn--primario">Filtrar</button>
+                <button type="reset" class="btn btn--secundario">Limpar</button>
+              </div>
+            </form>
+          </search>
+
+          <div class="lista-topo">
+            <h2 class="t-h2" id="lista-titulo">Relatos <span class="t-suave" id="contagem"></span></h2>
+            <p class="lista-topo__ordem">Ordem: mais recentes primeiro</p>
+          </div>
+
+          <div id="estado" aria-live="polite">
+            <div class="carregando" id="carregando" aria-label="Carregando relatos">
+              <div class="esqueleto"></div><div class="esqueleto"></div><div class="esqueleto"></div>
+            </div>
+          </div>
+          <ul class="relatos-lista" id="lista" hidden></ul>
+
+          <div class="lista-rodape" id="rodape-lista" hidden>
+            <span id="mostrando"></span>
+            <button type="button" class="btn btn--secundario" id="mais">Carregar mais</button>
+          </div>
+        </section>
+
+        <aside class="lateral" aria-labelledby="resumo-titulo">
+          <div class="cartao">
+            <h2 id="resumo-titulo">Resumo</h2>
+            <p class="t-numero" id="resumo-total">—</p>
+            <p>relatos registrados no total.</p>
+            <ts-barras id="resumo-barras" aria-label="Relatos por tipo de problema"></ts-barras>
+            <a class="btn btn--secundario" href="/painel">Abrir o painel completo</a>
+          </div>
+          <div class="cartao">
+            <p>Tem algo novo para contar?</p>
+            <a class="btn btn--primario" href="/registrar">Registrar relato</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__conteudo">
+      <div>
+        <p class="rodape__titulo">Território Seguro</p>
+        <p>Protótipo acadêmico — Global Solution 2026.2 (FIAP). Os dados são relatos comunitários, não alertas oficiais nem laudos técnicos.</p>
+        <p>Integrantes: João Victor Alves de Abreu (RM 564946) e Rodrigo Kenshin Viana Matayoshi (RM 564026).</p>
+      </div>
+      <div>
+        <p class="rodape__titulo">Créditos das imagens</p>
+        <p>Juan Pablo, Conrado Junior, Vitaly Gariev (Unsplash License) · Bueiro: fonte a confirmar · Connor Scott McManus (Licença Pexels).</p>
+      </div>
+      <p class="rodape__ods">ODS 11 — Cidades e Comunidades Sustentáveis · ODS 13 — Ação contra a Mudança Global do Clima</p>
+    </div>
+  </footer>
+  <script type="module" src="/js/comum.js"></script>
+  <script type="module" src="/js/componentes/barras.js"></script>
+  <script type="module" src="/js/relatos.js"></script>
+</body>
+</html>
