@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <!-- Pictogramas das categorias (48x48), exportados do Figma. A cor vem do texto (currentColor). -->
+  <symbol id="pic-alagamento" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 26L14 17H34L38 26V31H10V26Z"/>
+    <path d="M15 22H33"/>
+    <path d="M4 36C6 33 10 33 12 36C14 33 18 33 20 36C22 33 26 33 28 36C30 33 34 33 36 36C38 33 42 33 44 36"/>
+    <path d="M4 42C6 39 10 39 12 42C14 39 18 39 20 42C22 39 26 39 28 42C30 39 34 39 36 42C38 39 42 39 44 42"/>
+  </symbol>
+  <symbol id="pic-agua-imovel" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 22L24 8L40 22V40H8V22Z"/>
+    <path d="M20 40V30H28V40"/>
+    <path d="M8 34C10 31 14 31 16 34C18 31 22 31 24 34C26 31 30 31 32 34C34 31 38 31 40 34" style="stroke: var(--c-primary, #0b6e7f)"/>
+  </symbol>
+  <symbol id="pic-drenagem" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38 24H10C8.89543 24 8 24.8954 8 26V38C8 39.1046 8.89543 40 10 40H38C39.1046 40 40 39.1046 40 38V26C40 24.8954 39.1046 24 38 24Z"/>
+    <path d="M16 24V40M24 24V40M32 24V40"/>
+    <path d="M14 20C14 14 19 11 25 11C25 17 21 20 14 20Z"/>
+    <path d="M30 18L36 14L38 20L30 18Z"/>
+  </symbol>
+  <symbol id="pic-erosao" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 40L20 14L28 24L44 40H4Z"/>
+    <path d="M20 14L23 23L18 30L22 40"/>
+    <path d="M36 15C37.6569 15 39 13.6569 39 12C39 10.3431 37.6569 9 36 9C34.3431 9 33 10.3431 33 12C33 13.6569 34.3431 15 36 15Z"/>
+    <path d="M33 20L31 23"/>
+  </symbol>
+  <symbol id="pic-via" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 6L33 38H15L24 6Z"/>
+    <path d="M19 22H29M17 30H31"/>
+    <path d="M9 40H39"/>
+  </symbol>
+  <symbol id="pic-outro" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 30C11.8783 29.8674 9.89611 28.8974 8.48959 27.3033C7.08307 25.7092 6.36739 23.6217 6.5 21.5C6.63261 19.3783 7.60264 17.3961 9.1967 15.9896C10.7908 14.5831 12.8783 13.8674 15 14C15.9145 12.027 17.4471 10.4058 19.3658 9.3822C21.2844 8.35858 23.4845 7.9883 25.6325 8.32746C27.7805 8.66662 29.7594 9.69674 31.2694 11.2617C32.7793 12.8267 33.7379 14.8412 34 17C35.2994 17.5194 36.4132 18.4162 37.1979 19.5749C37.9825 20.7335 38.4019 22.1007 38.4019 23.5C38.4019 24.8993 37.9825 26.2665 37.1979 27.4251C36.4132 28.5838 35.2994 29.4806 34 30H14Z"/>
+    <path d="M17 35L15 41M25 35L23 41M33 35L31 41"/>
+  </symbol>
+
+  <!-- Ícones de interface (24x24, traço de 2) -->
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-contrast" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+</svg>
