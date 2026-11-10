@@ -18,12 +18,12 @@ function semCache(req, res, next) {
  * Rotas da API. No Express 5, handlers `async` que lançam erro (ou rejeitam a Promise)
  * já vão para o middleware de erro, então não precisa de try/catch em cada rota.
  */
-export function criarRotasApi(controlador) {
+export function criarRotasApi(controlador, { limitarEnvios }) {
   const rotas = Router();
   rotas.use(semCache);
 
   rotas.get('/relatos', controlador.listar);
-  rotas.post('/relatos', exigirJson, controlador.criar);
+  rotas.post('/relatos', exigirJson, limitarEnvios, controlador.criar);
   rotas.get('/indicadores', controlador.indicadores);
   rotas.get('/bairros', controlador.bairros);
 

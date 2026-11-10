@@ -34,7 +34,15 @@ export const REGRA_ATENCAO = Object.freeze({
   moderadaImpactoAlto: 1,
 });
 
+// Regra contra abuso: uma mesma origem (endereço IP) registra no máximo N relatos por janela.
+// Sem isso, uma só pessoa conseguiria inflar a "atenção" de um bairro enviando vários relatos seguidos.
+export const LIMITE_ENVIOS = Object.freeze({
+  maximo: 5,
+  janelaMinutos: 10,
+});
+
 export const MS_POR_DIA = 86_400_000;
+export const MS_POR_MINUTO = 60_000;
 
 /** Data de "hoje" no fuso de São Paulo, no formato AAAA-MM-DD. */
 export function hojeEmSaoPaulo(agora = new Date()) {
