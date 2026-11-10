@@ -3,7 +3,7 @@
 import { ErroApi, criarRelato, listarBairros } from './api.js';
 import { confirmar } from './confirmar.js';
 import { anunciar, el, icone } from './dom.js';
-import { CATEGORIAS, IMPACTOS, formatarData, hojeSP, somarDias } from './rotulos.js';
+import { CATEGORIAS, IMPACTOS, LIMITES, formatarData, hojeSP, somarDias } from './rotulos.js';
 
 const form = document.getElementById('form-relato');
 const passos = [...form.querySelectorAll('.passo')];
@@ -20,7 +20,6 @@ const inputData = document.getElementById('dataEvento');
 const inputBairro = document.getElementById('bairro');
 const descricao = document.getElementById('descricao');
 
-const TITULOS = { categoria: 'o que você viu', impacto: 'até onde a água chegou', bairro: 'o bairro', dataEvento: 'o dia', descricao: 'o texto' };
 const PASSO_DO_CAMPO = { categoria: 1, impacto: 2, bairro: 3, dataEvento: 4, descricao: 5 };
 
 // ---------- Estado do formulário ----------
@@ -49,12 +48,14 @@ function validarLocal(dados) {
   const erros = {};
   if (!CATEGORIAS[dados.categoria]) erros.categoria = 'Escolha uma figura para continuar.';
   if (!IMPACTOS[dados.impacto]) erros.impacto = 'Escolha até onde a água chegou.';
-  if (dados.bairro.length < 2 || dados.bairro.length > 80) erros.bairro = 'Escreva o nome do bairro (de 2 a 80 letras).';
+  if (dados.bairro.length < LIMITES.bairroMin || dados.bairro.length > LIMITES.bairroMax) {
+    erros.bairro = `Escreva o nome do bairro (de ${LIMITES.bairroMin} a ${LIMITES.bairroMax} letras).`;
+  }
   const hoje = hojeSP();
   if (!dados.dataEvento) erros.dataEvento = 'Escolha o dia em que aconteceu.';
   else if (dados.dataEvento > hoje) erros.dataEvento = 'A data não pode ser no futuro.';
-  else if (dados.dataEvento < somarDias(hoje, -365)) erros.dataEvento = 'Escolha uma data dos últimos 12 meses.';
-  if (dados.descricao.length > 500) erros.descricao = 'Use até 500 letras.';
+  else if (dados.dataEvento < somarDias(hoje, -LIMITES.diasNoPassadoMax)) erros.dataEvento = 'Escolha uma data dos últimos 12 meses.';
+  if (dados.descricao.length > LIMITES.descricaoMax) erros.descricao = `Use até ${LIMITES.descricaoMax} letras.`;
   return erros;
 }
 
@@ -169,11 +170,11 @@ form.addEventListener('change', (evento) => {
 
 inputBairro.addEventListener('input', () => mostrarErroDoCampo('bairro', ''));
 inputData.max = hojeSP();
-inputData.min = somarDias(hojeSP(), -365);
+inputData.min = somarDias(hojeSP(), -LIMITES.diasNoPassadoMax);
 
 const contador = document.getElementById('contador-descricao');
 function atualizarContador() {
-  contador.textContent = `${descricao.value.length} de 500 letras`;
+  contador.textContent = `${descricao.value.length} de ${LIMITES.descricaoMax} letras`;
 }
 descricao.addEventListener('input', () => {
   atualizarContador();
@@ -218,7 +219,7 @@ if (Reconhecimento) {
         .map((r) => r[0].transcript.trim())
         .join(' ');
       const atual = descricao.value.trim();
-      descricao.value = [atual, frase].filter(Boolean).join(' ').slice(0, 500);
+      descricao.value = [atual, frase].filter(Boolean).join(' ').slice(0, LIMITES.descricaoMax);
       atualizarContador();
     });
     const terminou = () => {
@@ -244,10 +245,6 @@ if (Reconhecimento) {
 
 // ---------- Envio ----------
 
-function textoDeImpactoCurto(chave) {
-  return IMPACTOS[chave].curto;
-}
-
 function mostrarSucesso(relato) {
   const caixa = document.getElementById('sucesso');
   const titulo = el('h2', { class: 't-display-l', tabindex: '-1' }, 'Pronto! Seu relato foi registrado.');
@@ -260,7 +257,7 @@ function mostrarSucesso(relato) {
       'ul',
       { class: 'resumo-sucesso' },
       el('li', {}, icone(CATEGORIAS[relato.categoria].icone, 'figura__icone'), el('strong', {}, CATEGORIAS[relato.categoria].nome), 'Problema'),
-      el('li', {}, el('img', { src: `/img/nivel-${relato.impacto}.svg`, alt: '', width: '28', height: '28' }), el('strong', {}, textoDeImpactoCurto(relato.impacto)), 'Impacto'),
+      el('li', {}, el('img', { src: `/img/nivel-${relato.impacto}.svg`, alt: '', width: '28', height: '28' }), el('strong', {}, IMPACTOS[relato.impacto].curto), 'Impacto'),
       el('li', {}, icone('i-pin'), el('strong', {}, relato.bairro), 'Bairro'),
       el('li', {}, icone('i-calendar'), el('strong', {}, formatarData(relato.dataEvento)), 'Dia'),
     ),

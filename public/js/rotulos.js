@@ -27,15 +27,17 @@ export const TENDENCIA = {
   caindo: '↓ caindo',
 };
 
+// Mesmos limites de src/dominio.js. O servidor é quem decide; aqui é só para avisar mais cedo.
+export const LIMITES = Object.freeze({
+  bairroMin: 2,
+  bairroMax: 80,
+  descricaoMax: 500,
+  diasNoPassadoMax: 365,
+});
+
 const FUSO = 'America/Sao_Paulo';
 
 export const plural = (n, singular, pluralTexto) => `${n} ${n === 1 ? singular : pluralTexto}`;
-
-/** "A, B e C" */
-export function listaEmTexto(itens) {
-  if (itens.length <= 1) return itens.join('');
-  return `${itens.slice(0, -1).join(', ')} e ${itens.at(-1)}`;
-}
 
 /** "2026-11-08" -> "08/11/2026" (sem passar por Date, para o fuso não mudar o dia). */
 export function formatarData(iso) {

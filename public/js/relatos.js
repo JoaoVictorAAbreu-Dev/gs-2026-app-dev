@@ -1,7 +1,7 @@
 // Página "Relatos": lista paginada com filtros e um resumo ao lado.
 import { ErroApi, listarBairros, listarRelatos, obterIndicadores } from './api.js';
 import { anunciar, el } from './dom.js';
-import { ATENCAO, CATEGORIAS, IMPACTOS, formatarData, formatarDataHora, plural } from './rotulos.js';
+import { CATEGORIAS, IMPACTOS, formatarData, formatarDataHora, plural } from './rotulos.js';
 import './componentes/barras.js';
 
 const LIMITE = 10;
