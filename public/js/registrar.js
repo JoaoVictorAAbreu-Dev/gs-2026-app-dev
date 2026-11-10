@@ -2,6 +2,7 @@
 // ditado por voz, envio para a API e tela de sucesso.
 import { ErroApi, criarRelato, listarBairros } from './api.js';
 import { confirmar } from './confirmar.js';
+import { ligarDitado } from './ditado.js';
 import { anunciar, el, icone } from './dom.js';
 import { CATEGORIAS, IMPACTOS, LIMITES, formatarData, hojeSP, somarDias } from './rotulos.js';
 
@@ -113,6 +114,7 @@ const consultaCelular = window.matchMedia('(max-width: 47.99rem)');
 let passoAtual = 1;
 
 function irParaPasso(numero, { focar = false } = {}) {
+  if (numero !== passoAtual) ditado.parar();
   passoAtual = Math.min(passos.length, Math.max(1, numero));
   passos.forEach((passo, i) => passo.toggleAttribute('data-ativo', i + 1 === passoAtual));
   atualizarControles();
@@ -137,7 +139,8 @@ function camposDoPasso(numero) {
     .map(([campo]) => campo);
 }
 
-botaoContinuar.addEventListener('click', () => {
+/** Valida só a pergunta atual e passa para a próxima. */
+function avancar() {
   const erros = validarLocal(lerDados());
   const doPasso = camposDoPasso(passoAtual).filter((c) => erros[c]);
   if (doPasso.length > 0) {
@@ -147,7 +150,9 @@ botaoContinuar.addEventListener('click', () => {
   }
   limparErros();
   irParaPasso(passoAtual + 1, { focar: true });
-});
+}
+
+botaoContinuar.addEventListener('click', avancar);
 
 botaoVoltar.addEventListener('click', () => irParaPasso(passoAtual - 1, { focar: true }));
 consultaCelular.addEventListener('change', () => irParaPasso(passoAtual));
@@ -158,14 +163,30 @@ consultaCelular.addEventListener('change', () => irParaPasso(passoAtual));
 form.addEventListener('change', (evento) => {
   const { name } = evento.target;
   if (name === 'quando') {
-    campoOutroDia.hidden = evento.target.value !== 'outro';
-    if (evento.target.value === 'outro') inputData.focus();
+    const outroDia = form.elements.quando.value === 'outro';
+    campoOutroDia.hidden = !outroDia;
+    if (outroDia) inputData.focus();
   }
   // Só radios e a data limpam o erro aqui. Campos de texto limpam ao digitar (evento "input"):
   // limpar ao sair do campo (blur) faria a tela pular debaixo do clique em "Enviar".
   if (evento.target.type === 'text' || evento.target.tagName === 'TEXTAREA') return;
   const campo = name === 'quando' ? 'dataEvento' : name;
   if (PASSO_DO_CAMPO[campo]) mostrarErroDoCampo(campo, '');
+});
+
+// Tocar de novo na opção já escolhida desmarca (como no protótipo): quem tocou sem querer
+// não fica preso a uma resposta. Um radio comum não deixa desmarcar, então fazemos à mão.
+let estavaMarcado = null;
+form.addEventListener('pointerdown', (evento) => {
+  const radio = evento.target.closest('label')?.querySelector('input[type="radio"]');
+  estavaMarcado = radio?.checked ? radio : null;
+});
+form.addEventListener('click', (evento) => {
+  const radio = evento.target;
+  if (radio.type !== 'radio' || radio !== estavaMarcado) return;
+  estavaMarcado = null;
+  radio.checked = false;
+  radio.dispatchEvent(new Event('change', { bubbles: true }));
 });
 
 inputBairro.addEventListener('input', () => mostrarErroDoCampo('bairro', ''));
@@ -191,57 +212,18 @@ listarBairros()
 
 // ---------- Ditado por voz (quando o navegador permite) ----------
 
-const Reconhecimento = window.SpeechRecognition ?? window.webkitSpeechRecognition;
-const botaoDitar = document.getElementById('ditar');
-
-if (Reconhecimento) {
-  botaoDitar.hidden = false;
-  document.getElementById('ajuda-voz').hidden = false;
-  let reconhecedor = null;
-
-  const parar = () => {
-    reconhecedor?.stop();
-  };
-
-  botaoDitar.addEventListener('click', () => {
-    if (reconhecedor) {
-      parar();
-      return;
-    }
-    reconhecedor = new Reconhecimento();
-    reconhecedor.lang = 'pt-BR';
-    reconhecedor.interimResults = false;
-    reconhecedor.continuous = true;
-
-    reconhecedor.addEventListener('result', (evento) => {
-      const frase = [...evento.results]
-        .slice(evento.resultIndex)
-        .map((r) => r[0].transcript.trim())
-        .join(' ');
-      const atual = descricao.value.trim();
-      descricao.value = [atual, frase].filter(Boolean).join(' ').slice(0, LIMITES.descricaoMax);
-      atualizarContador();
-    });
-    const terminou = () => {
-      reconhecedor = null;
-      botaoDitar.setAttribute('aria-pressed', 'false');
-      botaoDitar.querySelector('span').textContent = 'Falar em vez de escrever';
-    };
-    reconhecedor.addEventListener('end', terminou);
-    reconhecedor.addEventListener('error', (evento) => {
-      terminou();
-      if (evento.error === 'not-allowed') anunciar('Sem permissão para usar o microfone.');
-    });
-
-    try {
-      reconhecedor.start();
-      botaoDitar.setAttribute('aria-pressed', 'true');
-      botaoDitar.querySelector('span').textContent = 'Parar de ouvir';
-    } catch {
-      terminou();
-    }
-  });
-}
+const ditado = ligarDitado({
+  botao: document.getElementById('ditar'),
+  campo: descricao,
+  estado: document.getElementById('estado-voz'),
+  limite: LIMITES.descricaoMax,
+  aoMudar: () => {
+    atualizarContador();
+    mostrarErroDoCampo('descricao', '');
+  },
+});
+document.getElementById('ditar').hidden = !ditado.disponivel;
+document.getElementById('ajuda-voz').hidden = !ditado.disponivel;
 
 // ---------- Envio ----------
 
@@ -296,6 +278,14 @@ function reiniciar() {
 
 form.addEventListener('submit', async (evento) => {
   evento.preventDefault();
+  ditado.parar();
+
+  // No celular, a tecla Enter do teclado dispara o envio no meio das perguntas:
+  // ali ela deve valer como "Continuar", e não mostrar erros de perguntas que nem apareceram.
+  if (consultaCelular.matches && passoAtual < passos.length) {
+    avancar();
+    return;
+  }
   limparErros();
 
   const dados = lerDados();

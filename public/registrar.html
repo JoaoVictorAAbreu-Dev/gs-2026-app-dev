@@ -34,7 +34,7 @@
         <button type="button" class="btn-chip" data-acao="fonte-menos" aria-label="Diminuir a letra">A−</button>
         <button type="button" class="btn-chip" data-acao="fonte-mais" aria-label="Aumentar a letra">A+</button>
         <button type="button" class="btn-chip" data-acao="contraste" aria-pressed="false"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-contrast"/></svg> Alto contraste</button>
-        <button type="button" class="btn-chip" data-acao="ouvir-pagina" aria-pressed="false" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir a página</button>
+        <button type="button" class="btn-chip" data-acao="ouvir-pagina" aria-pressed="false" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg><span class="ondas" aria-hidden="true"><i></i><i></i><i></i></span> <span data-rotulo>Ouvir a página</span></button>
         <button type="button" class="btn-chip" data-acao="libras" aria-pressed="false">Libras</button>
       </div>
     </div>
@@ -96,7 +96,7 @@
               <div class="passo__cabeca">
                 <span class="passo__numero" aria-hidden="true">1</span>
                 <h2 class="passo__titulo" id="titulo-1" tabindex="-1">O que você viu?</h2>
-                <button type="button" class="btn btn--link" data-ouvir="#titulo-1, #dica-1" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-1, #dica-1" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg><span class="ondas" aria-hidden="true"><i></i><i></i><i></i></span> <span data-rotulo>Ouvir</span></button>
               </div>
               <p class="passo__dica" id="dica-1">Toque na figura que mais se parece.</p>
               <div class="grupo-figuras">
@@ -146,7 +146,7 @@
               <div class="passo__cabeca">
                 <span class="passo__numero" aria-hidden="true">2</span>
                 <h2 class="passo__titulo" id="titulo-2" tabindex="-1">Até onde a água chegou?</h2>
-                <button type="button" class="btn btn--link" data-ouvir="#titulo-2, #dica-2" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-2, #dica-2" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg><span class="ondas" aria-hidden="true"><i></i><i></i><i></i></span> <span data-rotulo>Ouvir</span></button>
               </div>
               <p class="passo__dica" id="dica-2">Na dúvida, escolha a que chegou mais perto.</p>
               <div class="grupo-niveis">
@@ -187,7 +187,7 @@
               <div class="passo__cabeca">
                 <span class="passo__numero" aria-hidden="true">3</span>
                 <h2 class="passo__titulo" id="titulo-3" tabindex="-1">Em que bairro foi?</h2>
-                <button type="button" class="btn btn--link" data-ouvir="#titulo-3, #dica-3" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-3, #dica-3" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg><span class="ondas" aria-hidden="true"><i></i><i></i><i></i></span> <span data-rotulo>Ouvir</span></button>
               </div>
               <p class="passo__dica" id="dica-3">Escreva só o nome do bairro. Não precisa do endereço.</p>
               <div class="campo">
@@ -203,7 +203,7 @@
               <div class="passo__cabeca">
                 <span class="passo__numero" aria-hidden="true">4</span>
                 <h2 class="passo__titulo" id="titulo-4" tabindex="-1">Quando aconteceu?</h2>
-                <button type="button" class="btn btn--link" data-ouvir="#titulo-4, #dica-4" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-4, #dica-4" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg><span class="ondas" aria-hidden="true"><i></i><i></i><i></i></span> <span data-rotulo>Ouvir</span></button>
               </div>
               <p class="passo__dica" id="dica-4">Escolha o dia.</p>
               <div class="campo-data">
@@ -225,15 +225,16 @@
               <div class="passo__cabeca">
                 <span class="passo__numero" aria-hidden="true">5</span>
                 <h2 class="passo__titulo" id="titulo-5" tabindex="-1">Quer contar mais? <span class="t-suave">(opcional)</span></h2>
-                <button type="button" class="btn btn--link" data-ouvir="#titulo-5, #dica-5" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-5, #dica-5" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg><span class="ondas" aria-hidden="true"><i></i><i></i><i></i></span> <span data-rotulo>Ouvir</span></button>
               </div>
               <p class="passo__dica" id="dica-5">Não escreva nome, telefone nem e-mail. O relato é público.</p>
               <div class="voz">
-                <button type="button" class="btn btn--secundario" id="ditar" aria-pressed="false" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-mic"/></svg> <span>Falar em vez de escrever</span></button>
+                <button type="button" class="btn btn--secundario" id="ditar" aria-pressed="false" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-mic"/></svg><span class="gravando" aria-hidden="true"></span> <span data-rotulo>Falar em vez de escrever</span></button>
                 <div class="campo">
                   <label class="campo__rotulo" for="descricao">O que mais você viu?</label>
                   <textarea class="entrada" id="descricao" name="descricao" rows="4" maxlength="500" aria-describedby="contador-descricao erro-descricao"></textarea>
                   <p class="campo__contador" id="contador-descricao" aria-live="off">0 de 500 letras</p>
+                  <p class="voz__estado" id="estado-voz" role="status" aria-live="polite" hidden></p>
                   <p class="campo__ajuda" id="ajuda-voz" hidden>Ao falar, o seu navegador pode enviar o áudio ao serviço dele para transformar em texto.</p>
                 </div>
               </div>
@@ -246,8 +247,8 @@
             </div>
 
             <div class="acoes-form">
-              <button type="button" class="btn btn--secundario" id="voltar" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-arrow-left"/></svg> Voltar</button>
-              <button type="button" class="btn btn--primario btn--grande" id="continuar" hidden>Continuar <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-arrow-right"/></svg></button>
+              <button type="button" class="btn btn--secundario" id="voltar" hidden><svg class="icone icone--seta-volta" aria-hidden="true"><use href="/img/sprite.svg#i-arrow-left"/></svg> Voltar</button>
+              <button type="button" class="btn btn--primario btn--grande" id="continuar" hidden>Continuar <svg class="icone icone--seta" aria-hidden="true"><use href="/img/sprite.svg#i-arrow-right"/></svg></button>
               <button type="submit" class="btn btn--primario btn--grande" id="enviar">Enviar relato</button>
               <button type="button" class="btn btn--link" id="limpar">Começar de novo</button>
             </div>
