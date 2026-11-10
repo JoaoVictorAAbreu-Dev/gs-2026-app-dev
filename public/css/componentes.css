@@ -229,6 +229,8 @@
 
   .barra-a11y__acoes {
     display: flex;
+    flex-wrap: wrap; /* com a letra ampliada os botões passam para a linha de baixo */
+    justify-content: flex-end;
     align-items: center;
     gap: var(--s-8);
   }
@@ -1021,7 +1023,15 @@
     }
 
     @media (max-width: 47.99rem) {
+      /* Vira uma lista de cartões: a tabela deixa de impor a largura das colunas. */
+      display: block;
+
+      & tbody {
+        display: block;
+      }
+
       & thead {
+        display: block;
         position: absolute;
         inline-size: 1px;
         block-size: 1px;
@@ -1029,9 +1039,12 @@
         clip-path: inset(50%);
       }
 
+      /* Cada linha vira um cartão flexível: o que não cabe ao lado desce para a linha de baixo
+         (acontece com a letra ampliada), em vez de espremer o nome do bairro. */
       & tbody tr {
-        display: grid;
-        grid-template-columns: 1fr auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
         gap: var(--s-4) var(--s-12);
         padding-block: var(--s-12);
       }
@@ -1040,19 +1053,21 @@
         padding: 0;
       }
 
+      & th.bairro {
+        flex: 1 1 8rem;
+        padding: 0;
+      }
+
       & td.grau {
-        grid-column: 2;
-        grid-row: 1;
-        justify-self: end;
+        flex: none;
       }
 
       & td.tendencia {
-        grid-column: 2;
-        justify-self: end;
+        margin-inline-start: auto;
       }
 
       & td.motivo {
-        grid-column: 1 / -1;
+        flex-basis: 100%;
       }
     }
   }
@@ -1251,5 +1266,235 @@
     margin-inline: auto;
     padding: var(--s-16) var(--gutter) var(--s-32);
     border-block-start: 1px solid rgb(255 255 255 / 14%);
+  }
+}
+
+/* ==========================================================================
+   Movimento — microinterações do protótipo (Figma, "Movimento — microinterações")
+   Botões: hover 150 ms ease-out · pressionar 80 ms
+   Opções: hover 150 ms · escolher 250 ms com "salto" (ease-out-back)
+   Ouvir: ondas em loop de 350 ms · Falar: ponto vermelho pulsando 1,2 s
+   Sucesso: círculo cresce e ✓ aparece em 450 ms
+   Com prefers-reduced-motion tudo vira troca instantânea (regra em base.css);
+   o estado continua indicado por cor + ícone + texto.
+   ========================================================================== */
+@layer componentes {
+  :root {
+    --mov-rapido: 0.08s;
+    --mov-padrao: 0.15s;
+    --mov-escolha: 0.25s;
+    --mov-sucesso: 0.45s;
+    --curva-saida: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --curva-salto: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* ---------- Botões ---------- */
+  .btn,
+  .btn-chip {
+    transition:
+      background-color var(--mov-padrao) var(--curva-saida),
+      border-color var(--mov-padrao) var(--curva-saida),
+      box-shadow var(--mov-padrao) var(--curva-saida),
+      transform var(--mov-rapido) ease-in,
+      opacity var(--mov-rapido) ease-in;
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+      opacity: 0.88;
+    }
+  }
+
+  :is(.btn--primario, .btn--secundario, .btn--perigo):hover:not(:disabled) {
+    box-shadow: 0 4px 12px rgb(11 46 58 / 0.18);
+  }
+
+  .icone--seta,
+  .icone--seta-volta {
+    transition: transform var(--mov-padrao) var(--curva-saida);
+  }
+
+  .btn:hover:not(:disabled) .icone--seta {
+    transform: translateX(6px);
+  }
+
+  .btn:hover:not(:disabled) .icone--seta-volta {
+    transform: translateX(-6px);
+  }
+
+  /* ---------- Opções: figuras, níveis e chips de data ---------- */
+  .figura,
+  .nivel,
+  .opcao-chip {
+    transition:
+      border-color var(--mov-padrao) var(--curva-saida),
+      background-color var(--mov-padrao) var(--curva-saida),
+      box-shadow var(--mov-padrao) var(--curva-saida),
+      transform var(--mov-padrao) var(--curva-saida);
+  }
+
+  :is(.figura, .nivel):hover {
+    box-shadow: 0 4px 12px rgb(11 46 58 / 0.12);
+    transform: translateY(-2px);
+  }
+
+  :is(.figura, .nivel):active {
+    transform: scale(0.98);
+  }
+
+  /* O ✓ "salta" ao aparecer; a animação recomeça sozinha a cada escolha. */
+  :is(.figura, .nivel):has(input:checked) > .marca-escolhida {
+    animation: saltar var(--mov-escolha) var(--curva-salto) both;
+  }
+
+  .opcao-chip:has(input:checked) {
+    animation: assentar var(--mov-escolha) var(--curva-salto);
+  }
+
+  @keyframes saltar {
+    from {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+  }
+
+  @keyframes assentar {
+    from {
+      transform: scale(0.92);
+    }
+  }
+
+  /* ---------- Ouvir: ondas sonoras enquanto lê ---------- */
+  .ondas {
+    display: none;
+    align-items: center;
+    gap: 2px;
+    block-size: 1.125rem;
+
+    & i {
+      inline-size: 3px;
+      block-size: 100%;
+      border-radius: 2px;
+      background: currentColor;
+      transform-origin: center;
+      animation: onda 0.35s ease-in-out infinite alternate;
+    }
+
+    & i:nth-child(2) {
+      animation-delay: -0.12s;
+    }
+
+    & i:nth-child(3) {
+      animation-delay: -0.24s;
+    }
+  }
+
+  [aria-pressed='true'] > .ondas {
+    display: inline-flex;
+  }
+
+  /* Enquanto lê, as ondas ocupam o lugar do ícone de alto-falante. */
+  [aria-pressed='true']:has(> .ondas) > .icone {
+    display: none;
+  }
+
+  @keyframes onda {
+    from {
+      transform: scaleY(0.3);
+    }
+  }
+
+  /* ---------- Falar: ponto vermelho pulsando enquanto grava ---------- */
+  .gravando {
+    display: none;
+    inline-size: 0.75rem;
+    block-size: 0.75rem;
+    flex: none;
+    border-radius: 50%;
+    background: var(--c-danger);
+    animation: pulsar 1.2s ease-in-out infinite;
+  }
+
+  #ditar[aria-pressed='true'] {
+    border-style: solid;
+    border-color: var(--c-danger);
+    color: var(--c-danger);
+
+    & > .gravando {
+      display: inline-block;
+    }
+
+    & > .icone {
+      display: none;
+    }
+  }
+
+  @keyframes pulsar {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in oklab, var(--c-danger) 50%, transparent);
+    }
+
+    50% {
+      box-shadow: 0 0 0 8px transparent;
+    }
+  }
+
+  .voz__estado {
+    color: var(--c-ink-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    &[data-erro] {
+      color: var(--c-danger);
+    }
+  }
+
+  /* ---------- Sucesso: círculo cresce e o ✓ se desenha ---------- */
+  .sucesso:not([hidden]) .sucesso__icone {
+    animation: saltar var(--mov-sucesso) var(--curva-salto) both;
+
+    & .icone {
+      stroke-dasharray: 24;
+      animation: desenhar var(--mov-sucesso) var(--curva-saida) 0.15s both;
+    }
+  }
+
+  @keyframes desenhar {
+    from {
+      stroke-dashoffset: 24;
+    }
+  }
+
+  /* ---------- Aviso flutuante (falhas de Ouvir, Falar e Libras) ---------- */
+  .aviso-flutuante {
+    position: fixed;
+    inset-block-end: var(--s-24);
+    inset-inline: var(--s-16);
+    z-index: 50;
+    max-inline-size: 32rem;
+    margin-inline: auto;
+    padding: var(--s-12) var(--s-16);
+    border-radius: var(--r-md);
+    background: var(--c-ink);
+    color: #fff;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+    opacity: 0;
+    transform: translateY(1rem);
+    pointer-events: none;
+    transition:
+      opacity var(--mov-padrao) var(--curva-saida),
+      transform var(--mov-padrao) var(--curva-saida);
+
+    &[data-visivel] {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media print {
+      display: none;
+    }
   }
 }
