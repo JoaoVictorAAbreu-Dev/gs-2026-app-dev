@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel — Território Seguro</title>
+  <meta name="description" content="Indicadores dos relatos: total, tipos de problema, impacto e bairros que merecem atenção nos últimos 7 dias.">
+  <meta name="theme-color" content="#0b6e8a">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&amp;display=swap">
+  <script src="/js/preferencias.js"></script>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/paginas.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="faixa-emergencia nao-imprimir" role="note">
+    <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-phone"/></svg>
+    <p>Em perigo agora? Este site não chama ninguém. Ligue <a href="tel:193">193</a> (Bombeiros) ou <a href="tel:199">199</a> (Defesa Civil).</p>
+  </div>
+
+  <div class="barra-a11y nao-imprimir">
+    <div class="barra-a11y__conteudo" role="group" aria-label="Ajustes de acessibilidade">
+      <span class="barra-a11y__rotulo">Ajustes:</span>
+      <div class="barra-a11y__acoes">
+        <button type="button" class="btn-chip" data-acao="fonte-menos" aria-label="Diminuir a letra">A−</button>
+        <button type="button" class="btn-chip" data-acao="fonte-mais" aria-label="Aumentar a letra">A+</button>
+        <button type="button" class="btn-chip" data-acao="contraste" aria-pressed="false"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-contrast"/></svg> Alto contraste</button>
+        <button type="button" class="btn-chip" data-acao="ouvir-pagina" aria-pressed="false" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir a página</button>
+        <button type="button" class="btn-chip" data-acao="libras" aria-pressed="false">Libras</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="cabecalho">
+    <div class="cabecalho__conteudo">
+      <a class="marca" href="/" aria-label="Território Seguro, página inicial">
+        <span class="marca__logo"><img src="/img/simbolo-branco.svg" alt="" width="28" height="28"></span>
+        <span>
+          <span class="marca__nome">Território Seguro</span>
+          <span class="marca__sub">Itaquaquecetuba · SP</span>
+        </span>
+      </a>
+      <button type="button" class="menu-botao" aria-expanded="false" aria-controls="menu-principal">
+        <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-menu"/></svg> <span>Menu</span>
+      </button>
+      <nav class="nav" id="menu-principal" aria-label="Principal">
+        <ul>
+            <li><a href="/">Início</a></li>
+            <li><a href="/registrar">Registrar relato</a></li>
+            <li><a href="/relatos">Ver relatos</a></li>
+            <li><a href="/painel" aria-current="page">Painel</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn--primario cabecalho__cta" href="/registrar">Registrar relato</a>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <div class="pagina-topo">
+      <div class="contentor">
+        <nav class="migalhas" aria-label="Você está em"><ol><li><a href="/">Início</a></li><li aria-current="page">Painel</li></ol></nav>
+        <div class="pagina-topo__titulo">
+          <h1 class="t-display-l">Painel de indicadores</h1>
+          <button type="button" class="btn btn--secundario nao-imprimir" id="imprimir"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-printer"/></svg> Imprimir</button>
+        </div>
+        <p class="pagina-topo__sub t-corpo-l" id="painel-sub">Somando os relatos para mostrar onde a chuva pesa mais.</p>
+      </div>
+    </div>
+
+    <div class="pagina-corpo">
+      <div class="contentor painel">
+        <div id="painel-estado" aria-live="polite"><div class="carregando"><div class="esqueleto"></div><div class="esqueleto"></div></div></div>
+
+        <div id="painel-conteudo" class="painel" hidden>
+          <section aria-label="Números principais">
+            <div class="kpis">
+              <div class="indicador"><p class="t-eyebrow">Relatos</p><p class="t-numero" id="k-total">—</p><p class="indicador__legenda">no total</p></div>
+              <div class="indicador"><p class="t-eyebrow">Problema mais relatado</p><p class="t-h3" id="k-categoria">—</p><p class="indicador__legenda" id="k-categoria-n"></p></div>
+              <div class="indicador"><p class="t-eyebrow">Bairros com relatos</p><p class="t-numero" id="k-bairros">—</p><p class="indicador__legenda">bairros diferentes</p></div>
+              <div class="indicador"><p class="t-eyebrow">Atenção alta</p><p class="t-numero" id="k-alta">—</p><p class="indicador__legenda">bairros nos últimos 7 dias</p></div>
+            </div>
+          </section>
+
+          <section class="graficos" aria-label="Resumos">
+            <div class="cartao">
+              <h2 class="t-h3">Por tipo de problema</h2>
+              <ts-barras id="g-categoria" aria-label="Relatos por tipo de problema"></ts-barras>
+            </div>
+            <div class="cartao">
+              <h2 class="t-h3">Por impacto</h2>
+              <ts-barras id="g-impacto" aria-label="Relatos por impacto"></ts-barras>
+            </div>
+          </section>
+
+          <section class="cartao" aria-labelledby="bairros-titulo">
+            <h2 class="t-h3" id="bairros-titulo">Bairros com mais relatos</h2>
+            <ts-barras id="g-bairro" aria-label="Relatos por bairro"></ts-barras>
+          </section>
+
+          <section class="cartao" aria-labelledby="atencao-titulo">
+            <div class="atencao__cabeca">
+              <div>
+                <h2 class="t-h3" id="atencao-titulo">Bairros que merecem atenção</h2>
+                <p>Compara os relatos dos últimos 7 dias com os 7 dias anteriores. É um sinal para olhar com mais cuidado, não um alerta oficial.</p>
+              </div>
+              <button type="button" class="btn btn--secundario btn-regra nao-imprimir" popovertarget="regra"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-info"/></svg> Como é calculado</button>
+              <div id="regra" popover class="dica-popover" role="dialog" aria-label="Regra de atenção">
+                <strong>Regra usada</strong>
+                <ul id="regra-lista"></ul>
+              </div>
+            </div>
+            <div id="atencao-vazia" class="vazio" hidden><p>Nenhum bairro teve relatos nos últimos 7 dias.</p></div>
+            <table class="tabela-atencao" id="tabela-atencao">
+              <thead><tr><th scope="col">Bairro</th><th scope="col">Nível</th><th scope="col">Relatos (7 dias)</th><th scope="col">Tendência</th><th scope="col">Motivo</th></tr></thead>
+              <tbody id="atencao-corpo"></tbody>
+            </table>
+          </section>
+
+          <p class="t-pequeno t-suave" id="gerado-em"></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__conteudo">
+      <div>
+        <p class="rodape__titulo">Território Seguro</p>
+        <p>Protótipo acadêmico — Global Solution 2026.2 (FIAP). Os dados são relatos comunitários, não alertas oficiais nem laudos técnicos.</p>
+        <p>Integrantes: João Victor Alves de Abreu (RM 564946) e Rodrigo Kenshin Viana Matayoshi (RM 564026).</p>
+      </div>
+      <div>
+        <p class="rodape__titulo">Créditos das imagens</p>
+        <p>Juan Pablo, Conrado Junior, Vitaly Gariev (Unsplash License) · Bueiro: fonte a confirmar · Connor Scott McManus (Licença Pexels).</p>
+      </div>
+      <p class="rodape__ods">ODS 11 — Cidades e Comunidades Sustentáveis · ODS 13 — Ação contra a Mudança Global do Clima</p>
+    </div>
+  </footer>
+  <script type="module" src="/js/comum.js"></script>
+  <script type="module" src="/js/componentes/barras.js"></script>
+  <script type="module" src="/js/painel.js"></script>
+</body>
+</html>
