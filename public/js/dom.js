@@ -42,3 +42,23 @@ export function anunciar(mensagem) {
     regiao.textContent = mensagem;
   }, 50);
 }
+
+const TEMPO_DO_AVISO_MS = 7000;
+let relogioDoAviso = null;
+
+/**
+ * Aviso visível no rodapé da tela (e lido por leitores de tela), que some sozinho.
+ * Serve para falhas de ações como "Ouvir" e "Falar": sem ele a pessoa aperta o botão,
+ * nada acontece e ela não sabe por quê.
+ */
+export function avisar(mensagem) {
+  let caixa = document.getElementById('aviso-flutuante');
+  if (!caixa) {
+    caixa = el('div', { id: 'aviso-flutuante', class: 'aviso-flutuante', role: 'status', 'aria-live': 'polite' });
+    document.body.append(caixa);
+  }
+  caixa.textContent = mensagem;
+  caixa.dataset.visivel = '';
+  clearTimeout(relogioDoAviso);
+  relogioDoAviso = setTimeout(() => delete caixa.dataset.visivel, TEMPO_DO_AVISO_MS);
+}
