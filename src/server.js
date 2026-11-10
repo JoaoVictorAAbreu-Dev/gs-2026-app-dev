@@ -2,7 +2,10 @@ import { criarApp } from './app.js';
 import { conectar } from './config/db.js';
 import { criarRepositorioMongo } from './repositories/relatosMongo.js';
 
-const porta = Number(process.env.PORT) || 3000;
+const PORTA_PADRAO = 3000;
+const PRAZO_PARA_ENCERRAR_MS = 5000;
+
+const porta = Number(process.env.PORT) || PORTA_PADRAO;
 const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017';
 const nomeBanco = process.env.MONGODB_DB || 'territorio_seguro';
 
@@ -21,8 +24,14 @@ const servidor = app.listen(porta, () => {
 });
 
 // Encerramento limpo (Ctrl+C): fecha o servidor e a conexão com o banco.
+// Espera os pedidos em andamento terminarem; se demorar demais, sai assim mesmo.
+let encerrando = false;
 async function encerrar() {
-  servidor.close();
+  if (encerrando) return;
+  encerrando = true;
+  setTimeout(() => process.exit(1), PRAZO_PARA_ENCERRAR_MS).unref();
+
+  await new Promise((resolve) => servidor.close(resolve));
   await conexao.client.close();
   process.exit(0);
 }
