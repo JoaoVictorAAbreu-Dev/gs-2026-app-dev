@@ -15,6 +15,12 @@ if (botaoMenu && menu) {
   };
 
   botaoMenu.addEventListener('click', () => alternar(!menu.hasAttribute('data-aberto')));
+  // Tocar fora do menu aberto fecha o menu.
+  document.addEventListener('click', (evento) => {
+    if (!menu.hasAttribute('data-aberto')) return;
+    if (menu.contains(evento.target) || botaoMenu.contains(evento.target)) return;
+    alternar(false);
+  });
   document.addEventListener('keydown', (evento) => {
     if (evento.key === 'Escape' && menu.hasAttribute('data-aberto')) {
       alternar(false);

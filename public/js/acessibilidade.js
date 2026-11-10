@@ -1,7 +1,7 @@
 // Barra de acessibilidade: letra maior/menor, alto contraste, ouvir a página e Libras (VLibras).
 // As preferências ficam no localStorage do navegador. Não são dados pessoais e não vão ao servidor.
 
-import { anunciar, el } from './dom.js';
+import { anunciar, avisar, el } from './dom.js';
 import { falar, podeFalar } from './falar.js';
 
 const ESCALAS = [0.9, 1, 1.15, 1.3, 1.5];
@@ -51,7 +51,17 @@ function alternarContraste(botao) {
 let estadoLibras = 'desligado';
 let caixaLibras = null;
 
+/** O VLibras desenha o próprio botão (dentro de um shadow DOM); isto abre o tradutor por ele. */
+function abrirTradutorDeLibras() {
+  const botaoDoWidget =
+    document.getElementById('vlibras-access-wrapper')?.shadowRoot?.getElementById('vlibras-button') ??
+    document.querySelector('[vw-access-button]');
+  botaoDoWidget?.click();
+}
+
 function ligarLibras(botao) {
+  // Segundo toque no nosso botão: abre o tradutor que já foi carregado.
+  if (estadoLibras === 'ligado') abrirTradutorDeLibras();
   if (estadoLibras !== 'desligado') return;
   estadoLibras = 'carregando';
   botao.setAttribute('aria-pressed', 'true');
@@ -68,15 +78,16 @@ function ligarLibras(botao) {
     caixaLibras?.remove();
     estadoLibras = 'desligado';
     botao.setAttribute('aria-pressed', 'false');
-    anunciar('Não foi possível carregar o VLibras. Confira a internet e tente de novo.');
+    avisar('Não foi possível carregar o VLibras. Confira a internet e toque em "Libras" de novo.');
   };
 
+  avisar('Carregando o VLibras…');
   const script = el('script', { src: 'https://vlibras.gov.br/app/vlibras-plugin.js' });
   script.addEventListener('load', () => {
     try {
       new window.VLibras.Widget('https://vlibras.gov.br/app');
       estadoLibras = 'ligado';
-      anunciar('Libras ativado. Use o botão do VLibras na lateral da página.');
+      avisar('Libras ativado. Toque no botão azul do VLibras, na lateral da tela.');
     } catch {
       falhar();
     }
