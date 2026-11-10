@@ -29,9 +29,10 @@ const CARACTERES_BAIRRO = /^[\p{L}\p{N} .,'’ºª-]+$/u;
 const EMAIL = /[^\s@]+@[^\s@]+\.[^\s@]+/;
 // Sequências que parecem telefone: 8+ dígitos, com ou sem DDD, espaço ou hífen.
 const TELEFONE = /(?:\+?55[\s-]?)?(?:\(?\d{2}\)?[\s-]?)?9?\d{4}[\s-]?\d{4}/;
+const ROMANOS = /^(?:i{1,3}|iv|v|vi{1,3}|ix|x)$/;
 const CONTROLE = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
 
-/** "jardim são josé  ii" -> "Jardim São José Ii" (preposições ficam minúsculas). */
+/** "jardim são josé  ii" -> "Jardim São José II" (preposições ficam minúsculas; romanos, maiúsculos). */
 export function normalizarBairro(texto) {
   return texto
     .normalize('NFC')
@@ -42,7 +43,7 @@ export function normalizarBairro(texto) {
       const minuscula = palavra.toLocaleLowerCase('pt-BR');
       if (i > 0 && PALAVRAS_MINUSCULAS.has(minuscula)) return minuscula;
       // Algarismos romanos curtos (II, III, IV) continuam em maiúsculas.
-      if (/^(?:i{1,3}|iv|v|vi{1,3}|ix|x)$/.test(minuscula)) return minuscula.toUpperCase();
+      if (ROMANOS.test(minuscula)) return minuscula.toUpperCase();
       return minuscula.charAt(0).toLocaleUpperCase('pt-BR') + minuscula.slice(1);
     })
     .join(' ');
