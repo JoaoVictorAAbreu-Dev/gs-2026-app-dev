@@ -1,0 +1,87 @@
+/*
+  Tokens de design — espelham as variáveis do Figma ("TS Tokens").
+  A ordem das camadas é declarada aqui e vale para o site todo: quem vem depois vence,
+  sem precisar de seletores mais específicos nem de !important.
+*/
+@layer tokens, base, componentes, paginas, utilitarios;
+
+@layer tokens {
+  :root {
+    color-scheme: light;
+
+    /* Cores */
+    --c-ink: #0e2a3b;
+    --c-ink-muted: #4a5d6b;
+    --c-primary: #0b6e7f;
+    --c-primary-strong: #08525f;
+    --c-primary-soft: #e3f2f4;
+    --c-surface: #ffffff;
+    --c-bg: #f5f7f6;
+    --c-border: #d5dde1;
+    --c-alta: #b45309;
+    --c-alta-soft: #fdf0dc;
+    --c-mod: #8a6a00;
+    --c-mod-soft: #fbf6d9;
+    --c-danger: #b42318;
+    --c-danger-soft: #fdecea;
+    --c-success: #1e7a46;
+    --c-success-soft: #e4f4ea;
+    --c-placeholder: #c9d6dc;
+    --c-sobre-escuro: #ffffff;
+    --c-banda: color-mix(in oklab, var(--c-primary-strong) 70%, var(--c-ink));
+    --c-baixo-soft: color-mix(in oklab, var(--c-ink-muted) 10%, var(--c-surface));
+
+    /* Espaçamento (4, 8, 12, 16, 24, 32, 48, 64, 96 px) */
+    --s-4: 0.25rem;
+    --s-8: 0.5rem;
+    --s-12: 0.75rem;
+    --s-16: 1rem;
+    --s-24: 1.5rem;
+    --s-32: 2rem;
+    --s-48: 3rem;
+    --s-64: 4rem;
+    --s-96: 6rem;
+
+    /* Raios */
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 16px;
+    --r-pill: 999px;
+
+    /* Tipografia */
+    --fonte: 'Public Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+    /* Fator de zoom da letra (botões A− e A+). Mexe no tamanho-base; tudo usa rem. */
+    --escala: 1;
+
+    /* Layout */
+    --largura: 82rem;
+    --gutter: clamp(1rem, 4.5vw, 4rem);
+    --largura-form: 20rem;
+    --foco: 3px solid var(--c-primary-strong);
+
+    --sombra-cartao: 0 1px 2px rgb(14 42 59 / 6%);
+  }
+
+  /* Modo de alto contraste (botão "Alto contraste"): preto sobre branco, bordas fortes. */
+  :root[data-contraste='alto'] {
+    --c-ink: #000000;
+    --c-ink-muted: #1a1a1a;
+    --c-primary: #00424e;
+    --c-primary-strong: #00262d;
+    --c-primary-soft: #ffffff;
+    --c-bg: #ffffff;
+    --c-border: #000000;
+    --c-alta: #5c2600;
+    --c-alta-soft: #ffffff;
+    --c-mod: #4a3800;
+    --c-mod-soft: #ffffff;
+    --c-danger: #8a1108;
+    --c-danger-soft: #ffffff;
+    --c-success: #0d4a28;
+    --c-success-soft: #ffffff;
+    --c-baixo-soft: #ffffff;
+    --c-banda: #000000;
+    --sombra-cartao: none;
+  }
+}
