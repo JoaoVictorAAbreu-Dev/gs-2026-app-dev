@@ -6,7 +6,7 @@ import { join } from 'node:path';
  */
 export function criarNaoEncontrado(pastaPublica) {
   return function naoEncontrado(req, res) {
-    if (req.path.startsWith('/api')) {
+    if (req.path === '/api' || req.path.startsWith('/api/')) {
       return res.status(404).json({
         erro: 'rota_nao_encontrada',
         mensagem: `A rota ${req.method} ${req.path} não existe.`,
