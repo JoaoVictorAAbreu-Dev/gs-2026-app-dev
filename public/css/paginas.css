@@ -133,7 +133,7 @@
 
   .passos-home {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
     gap: var(--s-24);
     margin: 0;
     padding: 0;
@@ -205,7 +205,7 @@
 
   .dados-chave {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
     gap: var(--s-16);
     margin-block-start: var(--s-8);
 
@@ -226,7 +226,7 @@
 
   .categorias {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--s-24);
     margin: 0;
     padding: 0;
@@ -559,7 +559,7 @@
 
   .filtros {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
     align-items: end;
     gap: var(--s-12);
     margin-block-end: var(--s-24);
@@ -598,6 +598,12 @@
   .painel {
     display: grid;
     gap: var(--s-24);
+  
+    /* Itens de grid não encolhem abaixo do conteúdo por padrão; com a letra ampliada isso
+       empurrava a página para o lado. */
+    & > * {
+      min-inline-size: 0;
+    }
   }
 
   .kpis {
@@ -605,12 +611,15 @@
     grid-template-columns: repeat(4, 1fr);
     gap: var(--s-16);
 
+    /* Com a letra ampliada (A+), duas colunas não cabem no celular: as colunas se ajustam sozinhas. */
     @media (max-width: 63.99rem) {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
     }
 
     & .indicador {
+      min-inline-size: 0;
       padding: var(--s-16);
+      overflow-wrap: anywhere;
     }
   }
 
