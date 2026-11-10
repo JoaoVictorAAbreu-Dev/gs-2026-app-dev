@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Território Seguro — relatos da chuva em Itaquaquecetuba</title>
+  <meta name="description" content="Conte em poucos passos o que a chuva causou no seu bairro. Os relatos viram um painel que mostra onde a atenção é maior.">
+  <meta name="theme-color" content="#0b6e8a">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&amp;display=swap">
+  <script src="/js/preferencias.js"></script>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/paginas.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="faixa-emergencia nao-imprimir" role="note">
+    <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-phone"/></svg>
+    <p>Em perigo agora? Este site não chama ninguém. Ligue <a href="tel:193">193</a> (Bombeiros) ou <a href="tel:199">199</a> (Defesa Civil).</p>
+  </div>
+
+  <div class="barra-a11y nao-imprimir">
+    <div class="barra-a11y__conteudo" role="group" aria-label="Ajustes de acessibilidade">
+      <span class="barra-a11y__rotulo">Ajustes:</span>
+      <div class="barra-a11y__acoes">
+        <button type="button" class="btn-chip" data-acao="fonte-menos" aria-label="Diminuir a letra">A−</button>
+        <button type="button" class="btn-chip" data-acao="fonte-mais" aria-label="Aumentar a letra">A+</button>
+        <button type="button" class="btn-chip" data-acao="contraste" aria-pressed="false"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-contrast"/></svg> Alto contraste</button>
+        <button type="button" class="btn-chip" data-acao="ouvir-pagina" aria-pressed="false" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir a página</button>
+        <button type="button" class="btn-chip" data-acao="libras" aria-pressed="false">Libras</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="cabecalho">
+    <div class="cabecalho__conteudo">
+      <a class="marca" href="/" aria-label="Território Seguro, página inicial">
+        <span class="marca__logo"><img src="/img/simbolo-branco.svg" alt="" width="28" height="28"></span>
+        <span>
+          <span class="marca__nome">Território Seguro</span>
+          <span class="marca__sub">Itaquaquecetuba · SP</span>
+        </span>
+      </a>
+      <button type="button" class="menu-botao" aria-expanded="false" aria-controls="menu-principal">
+        <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-menu"/></svg> <span>Menu</span>
+      </button>
+      <nav class="nav" id="menu-principal" aria-label="Principal">
+        <ul>
+            <li><a href="/" aria-current="page">Início</a></li>
+            <li><a href="/registrar">Registrar relato</a></li>
+            <li><a href="/relatos">Ver relatos</a></li>
+            <li><a href="/painel">Painel</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn--primario cabecalho__cta" href="/registrar">Registrar relato</a>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-titulo">
+      <img class="hero__imagem" src="/img/hero-rua-alagada-1170.webp"
+           srcset="/img/hero-rua-alagada-800.webp 800w, /img/hero-rua-alagada-1170.webp 1170w"
+           sizes="100vw" width="1170" height="780" fetchpriority="high"
+           alt="Rua de bairro alagada depois da chuva, com casas dos dois lados.">
+      <div class="contentor">
+        <div class="hero__conteudo">
+          <p class="t-eyebrow">Itaquaquecetuba · Alto Tietê · SP</p>
+          <h1 class="t-display-xl" id="hero-titulo">Quando a chuva chega, cada relato ajuda o bairro a enxergar o problema.</h1>
+          <p class="t-corpo-l hero__texto" id="hero-texto">Conte em poucos passos o que você viu: rua alagada, bueiro entupido, água em casa. Os relatos juntos mostram onde a atenção é maior.</p>
+          <div class="acoes">
+            <a class="btn btn--primario btn--grande" href="/registrar">Registrar um relato <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-arrow-right"/></svg></a>
+            <a class="btn btn--suave btn--grande" href="/relatos">Ver relatos</a>
+            <button type="button" class="btn btn--suave btn--grande" data-ouvir="#hero-titulo, #hero-texto" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+          </div>
+          <p class="hero__nota">Leva cerca de 2 minutos. Não pedimos nome, telefone nem endereço.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao secao--clara" aria-labelledby="como-titulo">
+      <div class="contentor">
+        <div class="secao__cabeca">
+          <p class="t-eyebrow">Como funciona</p>
+          <h2 class="t-display-l" id="como-titulo">Três passos, sem precisar de cadastro</h2>
+        </div>
+        <ol class="passos-home">
+          <li><span class="numero-circulo" aria-hidden="true">1</span><h3 class="t-h3">Escolha a figura</h3><p>Toque na imagem que mais se parece com o que aconteceu perto de você.</p></li>
+          <li><span class="numero-circulo" aria-hidden="true">2</span><h3 class="t-h3">Diga onde e quando</h3><p>Escreva só o bairro e escolha o dia. Se preferir, conte mais com a voz.</p></li>
+          <li><span class="numero-circulo" aria-hidden="true">3</span><h3 class="t-h3">Veja no painel</h3><p>Os relatos são somados por tipo e por bairro, e o painel mostra onde há mais sinais.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="secao" aria-labelledby="porque-titulo">
+      <div class="contentor porque">
+        <img class="porque__imagem" src="/img/por-que-importa-sp-1200.webp"
+             srcset="/img/por-que-importa-sp-600.webp 600w, /img/por-que-importa-sp-1200.webp 1200w"
+             sizes="(min-width: 64rem) 40vw, 100vw" width="1200" height="675" loading="lazy"
+             alt="Vista aérea de bairro densamente construído em área de morros na Grande São Paulo.">
+        <div class="porque__texto">
+          <p class="t-eyebrow">Por que importa</p>
+          <h2 class="t-display-l" id="porque-titulo">Quem mora no bairro sabe primeiro</h2>
+          <p>Em cidades como Itaquaquecetuba, a chuva forte atinge ruas, casas e encostas. Muita coisa só aparece nos registros oficiais depois, ou nunca. O relato de quem vive o problema chega antes.</p>
+          <div class="dados-chave">
+            <div class="indicador">
+              <p class="t-numero">167</p>
+              <p class="indicador__legenda">setores de risco geológico mapeados no município.</p>
+              <p class="indicador__fonte">Fonte: Unicamp, 2025</p>
+            </div>
+            <div class="indicador">
+              <p class="t-numero">10,1%</p>
+              <p class="indicador__legenda">dos domicílios em áreas com risco de inundação.</p>
+              <p class="indicador__fonte">Fonte: SINISA 2024 (ref. 2023)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao secao--clara" aria-labelledby="categorias-titulo">
+      <div class="contentor">
+        <div class="secao__cabeca">
+          <p class="t-eyebrow">O que você pode relatar</p>
+          <h2 class="t-display-l" id="categorias-titulo">Seis tipos de problema causados pela chuva</h2>
+        </div>
+        <ul class="categorias">
+        <li class="categoria">
+          <img src="/img/categoria-alagamento-860.webp" alt="Rua urbana tomada pela água da chuva, com carros parados." loading="lazy" width="900" height="600">
+          <div class="categoria__texto"><h3 class="t-h3">Alagamento em via</h3><p>Água acumulada que impede ou dificulta a passagem.</p></div>
+        </li>
+        <li class="categoria">
+          <img src="/img/categoria-drenagem-900.webp" alt="Bueiro de rua entupido por lixo e folhas." loading="lazy" width="900" height="600">
+          <div class="categoria__texto"><h3 class="t-h3">Obstrução de drenagem</h3><p>Bueiro ou boca de lobo entupido, com lixo ou folhas.</p></div>
+        </li>
+        <li class="categoria">
+          <img src="/img/categoria-via-interditada-900.webp" alt="Barreiras de plástico bloqueando uma rua." loading="lazy" width="900" height="600">
+          <div class="categoria__texto"><h3 class="t-h3">Dano ou interdição de via</h3><p>Buraco, desmoronamento de calçada ou rua bloqueada.</p></div>
+        </li>
+        <li class="categoria categoria--simples">
+          <div class="categoria__texto">
+            <svg class="figura__icone" aria-hidden="true"><use href="/img/sprite.svg#pic-agua-imovel"/></svg>
+            <h3 class="t-h3">Água em imóvel</h3><p>Água que entrou em casa, comércio ou garagem.</p>
+          </div>
+        </li>
+        <li class="categoria categoria--simples">
+          <div class="categoria__texto">
+            <svg class="figura__icone" aria-hidden="true"><use href="/img/sprite.svg#pic-erosao"/></svg>
+            <h3 class="t-h3">Erosão</h3><p>Terra cedendo, rachaduras ou barranco instável observado.</p>
+          </div>
+        </li>
+        <li class="categoria categoria--simples">
+          <div class="categoria__texto">
+            <svg class="figura__icone" aria-hidden="true"><use href="/img/sprite.svg#pic-outro"/></svg>
+            <h3 class="t-h3">Outro</h3><p>Qualquer outro efeito da chuva no seu dia a dia.</p>
+          </div>
+        </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="banda" aria-labelledby="banda-titulo">
+      <div class="contentor">
+        <div class="banda__texto">
+          <p class="t-eyebrow">Participe</p>
+          <h2 class="t-display-l" id="banda-titulo">Viu algo hoje? Leva dois minutos.</h2>
+          <p>Quanto mais relatos de bairros diferentes, mais claro fica onde a chuva pesa mais.</p>
+          <a class="btn btn--primario btn--grande" href="/registrar">Registrar um relato <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-arrow-right"/></svg></a>
+        </div>
+        <img class="banda__imagem" src="/img/mobilizacao-1200.webp"
+             srcset="/img/mobilizacao-600.webp 600w, /img/mobilizacao-1200.webp 1200w"
+             sizes="(min-width: 64rem) 40vw, 100vw" width="1200" height="675" loading="lazy"
+             alt="Moradores reunidos na rua conversando sobre o problema do bairro.">
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__conteudo">
+      <div>
+        <p class="rodape__titulo">Território Seguro</p>
+        <p>Protótipo acadêmico — Global Solution 2026.2 (FIAP). Os dados são relatos comunitários, não alertas oficiais nem laudos técnicos.</p>
+        <p>Integrantes: João Victor Alves de Abreu (RM 564946) e Rodrigo Kenshin Viana Matayoshi (RM 564026).</p>
+      </div>
+      <div>
+        <p class="rodape__titulo">Créditos das imagens</p>
+        <p>Juan Pablo, Conrado Junior, Vitaly Gariev (Unsplash License) · Bueiro: fonte a confirmar · Connor Scott McManus (Licença Pexels).</p>
+      </div>
+      <p class="rodape__ods">ODS 11 — Cidades e Comunidades Sustentáveis · ODS 13 — Ação contra a Mudança Global do Clima</p>
+    </div>
+  </footer>
+  <script type="module" src="/js/comum.js"></script>
+</body>
+</html>
