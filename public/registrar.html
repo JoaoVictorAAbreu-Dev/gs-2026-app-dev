@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registrar relato — Território Seguro</title>
+  <meta name="description" content="Conte o que a chuva causou perto de você em 5 perguntas rápidas. Sem nome, telefone ou endereço.">
+  <meta name="theme-color" content="#0b6e8a">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&amp;display=swap">
+  <script src="/js/preferencias.js"></script>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/componentes.css">
+  <link rel="stylesheet" href="/css/paginas.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="faixa-emergencia nao-imprimir" role="note">
+    <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-phone"/></svg>
+    <p>Em perigo agora? Este site não chama ninguém. Ligue <a href="tel:193">193</a> (Bombeiros) ou <a href="tel:199">199</a> (Defesa Civil).</p>
+  </div>
+
+  <div class="barra-a11y nao-imprimir">
+    <div class="barra-a11y__conteudo" role="group" aria-label="Ajustes de acessibilidade">
+      <span class="barra-a11y__rotulo">Ajustes:</span>
+      <div class="barra-a11y__acoes">
+        <button type="button" class="btn-chip" data-acao="fonte-menos" aria-label="Diminuir a letra">A−</button>
+        <button type="button" class="btn-chip" data-acao="fonte-mais" aria-label="Aumentar a letra">A+</button>
+        <button type="button" class="btn-chip" data-acao="contraste" aria-pressed="false"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-contrast"/></svg> Alto contraste</button>
+        <button type="button" class="btn-chip" data-acao="ouvir-pagina" aria-pressed="false" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir a página</button>
+        <button type="button" class="btn-chip" data-acao="libras" aria-pressed="false">Libras</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="cabecalho">
+    <div class="cabecalho__conteudo">
+      <a class="marca" href="/" aria-label="Território Seguro, página inicial">
+        <span class="marca__logo"><img src="/img/simbolo-branco.svg" alt="" width="28" height="28"></span>
+        <span>
+          <span class="marca__nome">Território Seguro</span>
+          <span class="marca__sub">Itaquaquecetuba · SP</span>
+        </span>
+      </a>
+      <button type="button" class="menu-botao" aria-expanded="false" aria-controls="menu-principal">
+        <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-menu"/></svg> <span>Menu</span>
+      </button>
+      <nav class="nav" id="menu-principal" aria-label="Principal">
+        <ul>
+            <li><a href="/">Início</a></li>
+            <li><a href="/registrar" aria-current="page">Registrar relato</a></li>
+            <li><a href="/relatos">Ver relatos</a></li>
+            <li><a href="/painel">Painel</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn--primario cabecalho__cta" href="/registrar">Registrar relato</a>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <div class="pagina-topo">
+      <div class="contentor">
+        <nav class="migalhas" aria-label="Você está em"><ol><li><a href="/">Início</a></li><li aria-current="page">Registrar relato</li></ol></nav>
+        <h1 class="t-display-l">Registrar relato</h1>
+        <p class="pagina-topo__sub t-corpo-l">Cinco perguntas rápidas sobre o que a chuva causou perto de você.</p>
+      </div>
+    </div>
+
+    <div class="pagina-corpo">
+      <div class="contentor layout-form">
+        <div>
+          <form id="form-relato" class="form-cartao cartao" novalidate data-assistente>
+            <div class="assistente nao-imprimir" id="assistente" hidden>
+              <div class="assistente__topo">
+                <p class="t-rotulo" id="assistente-texto">Pergunta 1 de 5</p>
+              </div>
+              <ol class="assistente__barra" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li></ol>
+            </div>
+
+            <div class="aviso aviso--erro" id="resumo-erros" role="alert" tabindex="-1" hidden>
+              <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-alert"/></svg>
+              <div>
+                <p class="aviso__titulo">Falta pouco para enviar.</p>
+                <ul class="aviso__corpo" id="resumo-lista"></ul>
+              </div>
+            </div>
+
+            <section class="passo" id="passo-1" data-passo="1" aria-labelledby="titulo-1">
+              <div class="passo__cabeca">
+                <span class="passo__numero" aria-hidden="true">1</span>
+                <h2 class="passo__titulo" id="titulo-1" tabindex="-1">O que você viu?</h2>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-1, #dica-1" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+              </div>
+              <p class="passo__dica" id="dica-1">Toque na figura que mais se parece.</p>
+              <div class="grupo-figuras">
+                <div class="figuras" role="radiogroup" aria-labelledby="titulo-1">
+            <label class="figura">
+              <input type="radio" name="categoria" value="alagamento" required aria-describedby="erro-categoria">
+              <svg class="figura__icone" aria-hidden="true"><use href="/img/sprite.svg#pic-alagamento"/></svg>
+              <span>Rua alagada</span>
+              <span class="marca-escolhida" aria-hidden="true"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-check"/></svg></span>
+            </label>
+            <label class="figura">
+              <input type="radio" name="categoria" value="agua-imovel" required aria-describedby="erro-categoria">
+              <svg class="figura__icone" aria-hidden="true"><use href="/img/sprite.svg#pic-agua-imovel"/></svg>
+              <span>Água dentro de casa</span>
+              <span class="marca-escolhida" aria-hidden="true"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-check"/></svg></span>
+            </label>
+            <label class="figura">
+              <input type="radio" name="categoria" value="drenagem" required aria-describedby="erro-categoria">
+              <svg class="figura__icone" aria-hidden="true"><use href="/img/sprite.svg#pic-drenagem"/></svg>
+              <span>Bueiro entupido</span>
+              <span class="marca-escolhida" aria-hidden="true"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-check"/></svg></span>
+            </label>
+            <label class="figura">
+              <input type="radio" name="categoria" value="erosao" required aria-describedby="erro-categoria">
+              <svg class="figura__icone" aria-hidden="true"><use href="/img/sprite.svg#pic-erosao"/></svg>
+              <span>Terra cedendo</span>
+              <span class="marca-escolhida" aria-hidden="true"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-check"/></svg></span>
+            </label>
+            <label class="figura">
+              <input type="radio" name="categoria" value="via" required aria-describedby="erro-categoria">
+              <svg class="figura__icone" aria-hidden="true"><use href="/img/sprite.svg#pic-via"/></svg>
+              <span>Rua danificada ou fechada</span>
+              <span class="marca-escolhida" aria-hidden="true"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-check"/></svg></span>
+            </label>
+            <label class="figura">
+              <input type="radio" name="categoria" value="outro" required aria-describedby="erro-categoria">
+              <svg class="figura__icone" aria-hidden="true"><use href="/img/sprite.svg#pic-outro"/></svg>
+              <span>Outro problema da chuva</span>
+              <span class="marca-escolhida" aria-hidden="true"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-check"/></svg></span>
+            </label>
+                </div>
+              </div>
+              <p class="erro-campo" id="erro-categoria" data-erro-de="categoria" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-alert"/></svg><span></span></p>
+            </section>
+
+            <section class="passo" id="passo-2" data-passo="2" aria-labelledby="titulo-2">
+              <div class="passo__cabeca">
+                <span class="passo__numero" aria-hidden="true">2</span>
+                <h2 class="passo__titulo" id="titulo-2" tabindex="-1">Até onde a água chegou?</h2>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-2, #dica-2" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+              </div>
+              <p class="passo__dica" id="dica-2">Na dúvida, escolha a que chegou mais perto.</p>
+              <div class="grupo-niveis">
+                <div class="niveis" role="radiogroup" aria-labelledby="titulo-2">
+            <label class="nivel">
+              <input type="radio" name="impacto" value="baixo" required aria-describedby="erro-impacto">
+              <img class="nivel__imagem" src="/img/nivel-baixo.svg" alt="" width="72" height="72">
+              <span>
+                <span class="nivel__titulo">Pouco</span>
+                <span class="nivel__descricao">A água ficou na altura do tornozelo.</span>
+              </span>
+              <span class="marca-escolhida" aria-hidden="true"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-check"/></svg></span>
+            </label>
+            <label class="nivel">
+              <input type="radio" name="impacto" value="moderado" required aria-describedby="erro-impacto">
+              <img class="nivel__imagem" src="/img/nivel-moderado.svg" alt="" width="72" height="72">
+              <span>
+                <span class="nivel__titulo">Médio</span>
+                <span class="nivel__descricao">A água chegou ao joelho.</span>
+              </span>
+              <span class="marca-escolhida" aria-hidden="true"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-check"/></svg></span>
+            </label>
+            <label class="nivel">
+              <input type="radio" name="impacto" value="alto" required aria-describedby="erro-impacto">
+              <img class="nivel__imagem" src="/img/nivel-alto.svg" alt="" width="72" height="72">
+              <span>
+                <span class="nivel__titulo">Muito</span>
+                <span class="nivel__descricao">A água chegou à cintura ou mais.</span>
+              </span>
+              <span class="marca-escolhida" aria-hidden="true"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-check"/></svg></span>
+            </label>
+                </div>
+              </div>
+              <p class="erro-campo" id="erro-impacto" data-erro-de="impacto" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-alert"/></svg><span></span></p>
+            </section>
+
+            <section class="passo" id="passo-3" data-passo="3" aria-labelledby="titulo-3">
+              <div class="passo__cabeca">
+                <span class="passo__numero" aria-hidden="true">3</span>
+                <h2 class="passo__titulo" id="titulo-3" tabindex="-1">Em que bairro foi?</h2>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-3, #dica-3" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+              </div>
+              <p class="passo__dica" id="dica-3">Escreva só o nome do bairro. Não precisa do endereço.</p>
+              <div class="campo">
+                <label class="campo__rotulo" for="bairro">Bairro</label>
+                <input class="entrada" id="bairro" name="bairro" type="text" list="lista-bairros" required minlength="2" maxlength="80"
+                       autocomplete="off" enterkeyhint="next" placeholder="Ex.: Jardim Exemplo" aria-describedby="erro-bairro">
+                <datalist id="lista-bairros"></datalist>
+              </div>
+              <p class="erro-campo" id="erro-bairro" data-erro-de="bairro" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-alert"/></svg><span></span></p>
+            </section>
+
+            <section class="passo" id="passo-4" data-passo="4" aria-labelledby="titulo-4">
+              <div class="passo__cabeca">
+                <span class="passo__numero" aria-hidden="true">4</span>
+                <h2 class="passo__titulo" id="titulo-4" tabindex="-1">Quando aconteceu?</h2>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-4, #dica-4" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+              </div>
+              <p class="passo__dica" id="dica-4">Escolha o dia.</p>
+              <div class="campo-data">
+                <div class="opcoes-chip" role="radiogroup" aria-labelledby="titulo-4">
+                  <label class="opcao-chip"><input type="radio" name="quando" value="hoje" aria-describedby="erro-dataEvento">Hoje</label>
+                  <label class="opcao-chip"><input type="radio" name="quando" value="ontem" aria-describedby="erro-dataEvento">Ontem</label>
+                  <label class="opcao-chip"><input type="radio" name="quando" value="outro" aria-describedby="erro-dataEvento">Outro dia</label>
+                </div>
+                <div class="campo" id="campo-outro-dia" hidden>
+                  <label class="campo__rotulo" for="dataEvento">Dia</label>
+                  <input class="entrada" id="dataEvento" name="dataEvento" type="date" aria-describedby="erro-dataEvento">
+                  <p class="campo__ajuda">Dos últimos 12 meses.</p>
+                </div>
+              </div>
+              <p class="erro-campo" id="erro-dataEvento" data-erro-de="dataEvento" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-alert"/></svg><span></span></p>
+            </section>
+
+            <section class="passo" id="passo-5" data-passo="5" aria-labelledby="titulo-5">
+              <div class="passo__cabeca">
+                <span class="passo__numero" aria-hidden="true">5</span>
+                <h2 class="passo__titulo" id="titulo-5" tabindex="-1">Quer contar mais? <span class="t-suave">(opcional)</span></h2>
+                <button type="button" class="btn btn--link" data-ouvir="#titulo-5, #dica-5" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-volume"/></svg> Ouvir</button>
+              </div>
+              <p class="passo__dica" id="dica-5">Não escreva nome, telefone nem e-mail. O relato é público.</p>
+              <div class="voz">
+                <button type="button" class="btn btn--secundario" id="ditar" aria-pressed="false" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-mic"/></svg> <span>Falar em vez de escrever</span></button>
+                <div class="campo">
+                  <label class="campo__rotulo" for="descricao">O que mais você viu?</label>
+                  <textarea class="entrada" id="descricao" name="descricao" rows="4" maxlength="500" aria-describedby="contador-descricao erro-descricao"></textarea>
+                  <p class="campo__contador" id="contador-descricao" aria-live="off">0 de 500 letras</p>
+                  <p class="campo__ajuda" id="ajuda-voz" hidden>Ao falar, o seu navegador pode enviar o áudio ao serviço dele para transformar em texto.</p>
+                </div>
+              </div>
+              <p class="erro-campo" id="erro-descricao" data-erro-de="descricao" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-alert"/></svg><span></span></p>
+            </section>
+
+            <div class="aviso aviso--erro" id="erro-envio" role="alert" tabindex="-1" hidden>
+              <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-alert"/></svg>
+              <div><p class="aviso__titulo">Não deu para enviar.</p><p class="aviso__corpo" id="erro-envio-texto"></p></div>
+            </div>
+
+            <div class="acoes-form">
+              <button type="button" class="btn btn--secundario" id="voltar" hidden><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-arrow-left"/></svg> Voltar</button>
+              <button type="button" class="btn btn--primario btn--grande" id="continuar" hidden>Continuar <svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-arrow-right"/></svg></button>
+              <button type="submit" class="btn btn--primario btn--grande" id="enviar">Enviar relato</button>
+              <button type="button" class="btn btn--link" id="limpar">Começar de novo</button>
+            </div>
+          </form>
+
+          <div class="cartao sucesso" id="sucesso" hidden></div>
+        </div>
+
+        <aside class="lateral" aria-label="Ajuda">
+          <div class="cartao">
+            <h2>Alguém em perigo?</h2>
+            <p>Este site não chama ninguém. Ligue agora:</p>
+            <p><a class="btn btn--perigo btn--bloco" href="tel:193"><svg class="icone" aria-hidden="true"><use href="/img/sprite.svg#i-phone"/></svg> 193 — Bombeiros</a></p>
+            <p><a class="btn btn--secundario btn--bloco" href="tel:199">199 — Defesa Civil</a></p>
+          </div>
+          <div class="cartao">
+            <h2>Sua privacidade</h2>
+            <p>Não pedimos nome, telefone nem endereço. Os relatos aparecem para todos, só com bairro, dia e tipo de problema.</p>
+          </div>
+          <div class="cartao">
+            <details name="ajuda" open>
+              <summary>Precisa de ajuda para ler?</summary>
+              <ul>
+                <li>Use o botão <strong>Ouvir</strong> ao lado de cada pergunta.</li>
+                <li>Aumente a letra com <strong>A+</strong> no topo da página.</li>
+                <li>Ative o <strong>Alto contraste</strong> se a tela estiver difícil de ver.</li>
+                <li>No lugar de escrever, use <strong>Falar</strong> na última pergunta (se o seu navegador permitir).</li>
+              </ul>
+            </details>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__conteudo">
+      <div>
+        <p class="rodape__titulo">Território Seguro</p>
+        <p>Protótipo acadêmico — Global Solution 2026.2 (FIAP). Os dados são relatos comunitários, não alertas oficiais nem laudos técnicos.</p>
+        <p>Integrantes: João Victor Alves de Abreu (RM 564946) e Rodrigo Kenshin Viana Matayoshi (RM 564026).</p>
+      </div>
+      <div>
+        <p class="rodape__titulo">Créditos das imagens</p>
+        <p>Juan Pablo, Conrado Junior, Vitaly Gariev (Unsplash License) · Bueiro: fonte a confirmar · Connor Scott McManus (Licença Pexels).</p>
+      </div>
+      <p class="rodape__ods">ODS 11 — Cidades e Comunidades Sustentáveis · ODS 13 — Ação contra a Mudança Global do Clima</p>
+    </div>
+  </footer>
+  <script type="module" src="/js/comum.js"></script>
+  <script type="module" src="/js/registrar.js"></script>
+</body>
+</html>
