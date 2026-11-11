@@ -1,5 +1,7 @@
 Integrantes: João Victor Alves de Abreu (RM 564946) e Rodrigo Kenshin Viana Matayoshi (RM 564026).
 
+Vídeo pitch: https://youtu.be/dvWWdW4-P4U
+
 # Território Seguro
 
 Aplicação web para **relatos comunitários dos efeitos da chuva em Itaquaquecetuba (SP)**. Global Solution 2026.2 — Application Development (FIAP).
